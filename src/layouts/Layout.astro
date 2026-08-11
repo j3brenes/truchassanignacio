@@ -56,8 +56,7 @@ const restaurantSchema = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/LogoTSI.svg" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
@@ -77,6 +76,14 @@ const restaurantSchema = {
     <meta name="twitter:image" content={socialImageUrl} />
 
     <script type="application/ld+json" set:html={JSON.stringify(restaurantSchema)} />
+
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-3GF813MLWL"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-3GF813MLWL');
+    </script>
   </head>
   <body class="flex flex-col min-h-screen">
     <Header transparentOnTop={transparentHeader} />

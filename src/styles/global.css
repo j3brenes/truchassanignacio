@@ -6,7 +6,6 @@
 @import '@fontsource/inter/500.css';
 
 @theme {
-  /* Paleta inspirada en el Valle de Orosi: verdes profundos y tonos tierra */
   --color-forest-50: #f2f5f0;
   --color-forest-100: #e0e8db;
   --color-forest-400: #6b8f5c;
