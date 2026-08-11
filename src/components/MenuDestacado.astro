@@ -1,0 +1,49 @@
+---
+interface Platillo {
+  nombre: string;
+  descripcion: string;
+  imageSrc: string;
+}
+
+interface Props {
+  platillos: Platillo[];
+}
+
+const { platillos } = Astro.props;
+---
+
+<section class="py-24 px-6 bg-stone-50">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14">
+      <h2 class="font-serif text-4xl text-forest-800 mb-3">Lo que preparamos</h2>
+      <p class="font-sans text-stone-800 max-w-lg mx-auto">
+        Trucha fresca del valle, preparada de distintas formas para cada visita.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 mb-12">
+      {platillos.map((platillo) => (
+        <div class="rounded-lg overflow-hidden shadow-md bg-white">
+          <img
+            src={platillo.imageSrc}
+            alt={platillo.nombre}
+            class="w-full h-56 object-cover"
+          />
+          <div class="p-6">
+            <h3 class="font-serif text-2xl text-forest-800 mb-2">{platillo.nombre}</h3>
+            <p class="font-sans text-sm text-stone-800 leading-relaxed">{platillo.descripcion}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="text-center">
+      <a
+        href="/menu"
+        class="inline-block border border-forest-600 text-forest-800 font-sans text-sm uppercase tracking-wide px-8 py-3 rounded hover:bg-forest-600 hover:text-white transition-colors"
+      >
+        Ver menú completo
+      </a>
+    </div>
+  </div>
+</section>

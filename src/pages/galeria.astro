@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GaleriaCategoria from '../components/GaleriaCategoria.astro';
+
+const floraFauna = Array.from({ length: 14 }, (_, i) => ({
+  src: `/images/galeria/FloraFauna/imagen${i + 1}.jpg`,
+  alt: `Flora y fauna - Truchas San Ignacio ${i + 1}`,
+}));
+
+const fincaLagos = Array.from({ length: 17 }, (_, i) => ({
+  src: `/images/galeria/Finca/imagen${i + 1}.jpg`,
+  alt: `Finca y lagos - Truchas San Ignacio ${i + 1}`,
+}));
+
+const restaurante = Array.from({ length: 16 }, (_, i) => ({
+  src: `/images/galeria/Restaurante/imagen${i + 1}.jpg`,
+  alt: `Restaurante - Truchas San Ignacio ${i + 1}`,
+}));
+---
+
+<Layout title="Galería" description="Fotos del Valle de Orosi y Truchas San Ignacio" transparentHeader={false}>
+  <main class="flex-1 bg-stone-50 pt-32 pb-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <h1 class="font-serif text-5xl text-forest-800 mb-3">Galería</h1>
+        <p class="font-sans text-stone-800 max-w-lg mx-auto">Un vistazo al valle, la finca y la experiencia junto al agua.</p>
+      </div>
+
+      <GaleriaCategoria nombre="Flora y Fauna" imagenes={floraFauna} offset={0} />
+      <GaleriaCategoria nombre="Finca y Lagos" imagenes={fincaLagos} offset={14} />
+      <GaleriaCategoria nombre="Restaurante" imagenes={restaurante} offset={31} />
+    </div>
+  </main>
+
+  <div id="lightbox" class="hidden fixed inset-0 bg-forest-900/95 z-[60] flex items-center justify-center px-6">
+    <button id="lightbox-close" class="absolute top-6 right-6 text-stone-50" aria-label="Cerrar">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <button id="lightbox-prev" class="absolute left-4 md:left-8 text-stone-50" aria-label="Anterior">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
+      </svg>
+    </button>
+    <img id="lightbox-image" src="" alt="" class="max-h-[85vh] max-w-full object-contain rounded" />
+    <button id="lightbox-next" class="absolute right-4 md:right-8 text-stone-50" aria-label="Siguiente">
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</Layout>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.galeria-prev, .galeria-next').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const track = targetId ? document.getElementById(targetId) : null;
+      if (!track) return;
+
+      const card = track.querySelector<HTMLElement>('.lightbox-trigger');
+      const cardWidth = card ? card.offsetWidth + 16 : 300;
+
+      const delta = btn.classList.contains('galeria-next') ? cardWidth : -cardWidth;
+      track.scrollBy({ left: delta, behavior: 'smooth' });
+    });
+  });
+
+  const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>('.lightbox-trigger'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightbox-image') as HTMLImageElement;
+  const closeBtn = document.getElementById('lightbox-close');
+  const prevBtn = document.getElementById('lightbox-prev');
+  const nextBtn = document.getElementById('lightbox-next');
+
+  const sources = triggers
+    .sort((a, b) => Number(a.dataset.index) - Number(b.dataset.index))
+    .map((trigger) => {
+      const img = trigger.querySelector('img');
+      return { src: img?.getAttribute('src') ?? '', alt: img?.getAttribute('alt') ?? '' };
+    });
+
+  let currentIndex = 0;
+
+  const openLightbox = (index: number) => {
+    currentIndex = index;
+    lightboxImage.src = sources[currentIndex].src;
+    lightboxImage.alt = sources[currentIndex].alt;
+    lightbox?.classList.remove('hidden');
+  };
+
+  const closeLightbox = () => lightbox?.classList.add('hidden');
+
+  const showRelative = (delta: number) => {
+    currentIndex = (currentIndex + delta + sources.length) % sources.length;
+    lightboxImage.src = sources[currentIndex].src;
+    lightboxImage.alt = sources[currentIndex].alt;
+  };
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => openLightbox(Number(trigger.dataset.index)));
+  });
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  prevBtn?.addEventListener('click', () => showRelative(-1));
+  nextBtn?.addEventListener('click', () => showRelative(1));
+
+  document.addEventListener('keydown', (e) => {
+    if (lightbox?.classList.contains('hidden')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showRelative(-1);
+    if (e.key === 'ArrowRight') showRelative(1);
+  });
+</script>

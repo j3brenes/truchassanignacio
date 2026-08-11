@@ -1,0 +1,111 @@
+---
+import Layout from '../layouts/Layout.astro';
+import MiniGaleriaBubble from '../components/MiniGaleriaBubble.astro';
+
+// Nota: precios tomados de las fotos del menú viejo (menucomida.png, menubebidas.png).
+// Pueden estar desactualizados frente a la BD de producción de TSI Facturación —
+// por eso se muestra la aclaración visible junto al menú.
+
+const imagenesMenu = Array.from({ length: 12 }, (_, i) => ({
+  src: `/images/menu/menu${i + 1}.jpg`,
+  alt: `Platillo ${i + 1} - Truchas San Ignacio`,
+}));
+
+const opcionesAcompanamiento = 'yuca frita, papas fritas, patacones o "De la casa" (casado de arroz, frijoles y plátano maduro)';
+
+const entradas = [
+  { nombre: 'Ceviche pequeño', precio: '₡2.800', descripcion: '' },
+  { nombre: 'Ceviche mediano', precio: '₡4.800', descripcion: 'Tipo de pescado puede variar según el día.' },
+  { nombre: 'Orden de patacones con frijoles', precio: '₡2.800', descripcion: '' },
+  { nombre: 'Orden de yuca frita', precio: '₡2.800', descripcion: '' },
+  { nombre: 'Orden de papas fritas', precio: '₡2.800', descripcion: '' },
+  { nombre: 'Mixto', precio: '₡4.000', descripcion: 'Yuca, papas y patacones en un mismo plato.' },
+];
+
+// Nota: precio de la trucha varía según tamaño, nunca se cobra por peso.
+const platoPrincipal = [
+  { nombre: 'Trucha', precio: 'Desde ₡7.500', descripcion: `Con acompañamiento a elegir entre ${opcionesAcompanamiento}, y ensalada incluida. Precio varía según el tamaño de la trucha.` },
+  { nombre: 'Pollo a la plancha', precio: '₡6.000', descripcion: `Con acompañamiento a elegir entre ${opcionesAcompanamiento}, y ensalada incluida.` },
+  { nombre: 'Lomo a la plancha', precio: '₡6.500', descripcion: `Con acompañamiento a elegir entre ${opcionesAcompanamiento}, y ensalada incluida.` },
+  { nombre: 'Filet de tilapia', precio: '₡6.000', descripcion: `Con acompañamiento a elegir entre ${opcionesAcompanamiento}, y ensalada incluida.` },
+];
+
+const menuNino = [
+  { nombre: 'Pollo a la plancha', precio: '₡4.000', descripcion: 'Acompañado de arroz, frijoles, maduro y papas fritas.' },
+  { nombre: 'Lomo', precio: '₡4.000', descripcion: 'Acompañado de arroz, frijoles, maduro y papas fritas.' },
+  { nombre: 'Filet de tilapia', precio: '₡4.000', descripcion: 'Acompañado de arroz, frijoles, maduro y papas fritas.' },
+];
+
+const postres = [
+  { nombre: 'Arroz con leche', precio: '₡1.000', descripcion: '' },
+  { nombre: 'Copa de helado', precio: '₡1.750', descripcion: 'Estilo sundae.' },
+];
+
+const acompanamientosAdicionales = [
+  { nombre: 'Arroz', precio: '₡500' },
+  { nombre: 'Frijoles', precio: '₡500' },
+  { nombre: 'Plátano maduro', precio: '₡1.500' },
+];
+
+const bebidasNota = 'Contamos con bebidas naturales, gaseosas, café y una selección de bebidas alcohólicas (cervezas, vinos y licores). Consulta disponibilidad con tu mesero.';
+
+const categorias = [
+  { nombre: 'Entradas', platillos: entradas },
+  { nombre: 'Plato Principal', platillos: platoPrincipal },
+  { nombre: 'Menú Niño', platillos: menuNino },
+  { nombre: 'Postres', platillos: postres },
+];
+---
+
+<Layout title="Menú" description="Menú de Truchas San Ignacio, Valle de Orosi" transparentHeader={false}>
+  <main class="flex-1 textura-papel pt-32 pb-24 px-6">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-6">
+        <h1 class="font-serif text-5xl text-forest-800 mb-3">Nuestro Menú</h1>
+        <p class="font-sans text-stone-800 max-w-lg mx-auto">Pesque su propia trucha o permita que la pesquemos por usted — la frescura está garantizada.</p>
+      </div>
+
+      <p class="text-center font-sans text-xs text-stone-400 max-w-md mx-auto mb-10 italic">
+        Los precios son una guía y pueden no reflejar los valores actuales. Los precios definitivos son siempre los indicados en el restaurante.
+      </p>
+
+      <MiniGaleriaBubble imagenes={imagenesMenu} />
+
+      <div class="mt-5 space-y-14">
+        {categorias.map((categoria) => (
+          <div>
+            <h2 class="font-serif text-3xl text-forest-800 mb-6 pb-2 border-b border-forest-400/30">{categoria.nombre}</h2>
+            <div class="space-y-5">
+              {categoria.platillos.map((platillo) => (
+                <div class="flex justify-between items-baseline gap-4">
+                  <div>
+                    <p class="font-sans text-lg text-stone-800">{platillo.nombre}</p>
+                    {platillo.descripcion && <p class="font-sans text-sm text-stone-400 mt-1">{platillo.descripcion}</p>}
+                  </div>
+                  <p class="font-sans text-stone-800 whitespace-nowrap">{platillo.precio}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+
+        <div>
+          <h2 class="font-serif text-3xl text-forest-800 mb-6 pb-2 border-b border-forest-400/30">Acompañamiento adicional</h2>
+          <div class="space-y-3">
+            {acompanamientosAdicionales.map((item) => (
+              <div class="flex justify-between items-baseline gap-4">
+                <p class="font-sans text-stone-800">{item.nombre}</p>
+                <p class="font-sans text-stone-800 whitespace-nowrap">{item.precio}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div>
+          <h2 class="font-serif text-3xl text-forest-800 mb-6 pb-2 border-b border-forest-400/30">Bebidas</h2>
+          <p class="font-sans text-stone-800 leading-relaxed">{bebidasNota}</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Layout>

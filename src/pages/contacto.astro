@@ -1,0 +1,36 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const whatsappNumber = '50625333000';
+const whatsappMessage = encodeURIComponent('Hola, quisiera hacer una consulta sobre Truchas San Ignacio.');
+const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+const correo = 'truchassanignacio@gmail.com';
+---
+
+<Layout title="Contacto" description="Contáctenos - Truchas San Ignacio" transparentHeader={false}>
+  <main class="flex-1 flex flex-col justify-center bg-stone-50 pt-32 pb-24 px-6">
+    <div class="max-w-2xl mx-auto text-center">
+      <h1 class="font-serif text-5xl text-forest-800 mb-3">Contáctenos</h1>
+      <p class="font-sans text-stone-800 mb-14">Escríbenos por WhatsApp o correo, con gusto atendemos tu consulta.</p>
+
+      <div class="bg-white rounded-lg shadow-md p-8 space-y-6 text-left">
+        <div>
+          <p class="text-sm uppercase tracking-wide text-forest-600 mb-1 font-sans">Horario</p>
+          <p class="font-sans text-stone-800">Sábados, domingos y feriados, 10:00 a.m. a 5:30 p.m.</p>
+        </div>
+
+        <div>
+          <p class="text-sm uppercase tracking-wide text-forest-600 mb-1 font-sans">Grupos entre semana</p>
+          <p class="font-sans text-stone-800">Grupos de 10 personas o más pueden coordinar apertura entre semana con 2 días de anticipación.</p>
+        </div>
+
+        <div>
+          <p class="text-sm uppercase tracking-wide text-forest-600 mb-1 font-sans">Correo</p>
+          <a href={`mailto:${correo}`} class="font-sans text-forest-800 hover:text-forest-600 transition-colors">{correo}</a>
+        </div>
+
+        <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" class="block bg-forest-600 hover:bg-forest-800 text-white font-sans text-sm uppercase tracking-wide px-8 py-3 rounded text-center transition-colors">Hacer una consulta por WhatsApp</a>
+      </div>
+    </div>
+  </main>
+</Layout>

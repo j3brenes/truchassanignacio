@@ -1,0 +1,42 @@
+---
+const socialLinks = [
+  { href: 'https://www.instagram.com/truchas_orosi', label: 'Instagram' },
+  { href: 'https://www.tiktok.com/@truchas_orosi', label: 'TikTok' },
+  { href: 'https://www.facebook.com/Truchassanignacioorosi/', label: 'Facebook' },
+];
+
+const reviewLinks = [
+  { href: 'https://maps.app.goo.gl/26vya1ytY482NEJV7', label: 'Google Maps' },
+  { href: 'https://www.tripadvisor.com.mx/Restaurant_Review-g309232-d12902817-Reviews-Truchas_San_Ignacio-Orosi_Province_of_Cartago.html', label: 'TripAdvisor' },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="bg-forest-900 text-stone-100 py-12 px-6">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8">
+    <div>
+      <p class="font-serif text-2xl mb-2">Truchas San Ignacio</p>
+      <p class="font-sans text-sm text-stone-400 max-w-xs">Valle de Orosi, Cartago. Negocio familiar desde 1992.</p>
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <p class="font-sans text-sm uppercase tracking-wide text-stone-400 mb-1">Síguenos</p>
+      {socialLinks.map((social) => (
+        <a href={social.href} target="_blank" rel="noopener noreferrer" class="font-sans text-sm hover:text-forest-400 transition-colors">{social.label}</a>
+      ))}
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <p class="font-sans text-sm uppercase tracking-wide text-stone-400 mb-1">Califícanos</p>
+      {reviewLinks.map((review) => (
+        <a href={review.href} target="_blank" rel="noopener noreferrer" class="font-sans text-sm hover:text-forest-400 transition-colors">{review.label}</a>
+      ))}
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto mt-8 pt-6 border-t border-forest-800 flex flex-col md:flex-row justify-between gap-2">
+    <p class="font-sans text-xs text-stone-400">&copy; {currentYear} Truchas San Ignacio. Todos los derechos reservados.</p>
+    <a href="https://www.linkedin.com/in/isbreto" target="_blank" rel="noopener noreferrer" class="font-sans text-xs text-stone-400 hover:text-forest-400 transition-colors">Desarrollado por Isaac Brenes Torres</a>
+  </div>
+</footer>

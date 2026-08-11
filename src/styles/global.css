@@ -1,0 +1,38 @@
+@import 'tailwindcss';
+
+@import '@fontsource/cormorant-garamond/400.css';
+@import '@fontsource/cormorant-garamond/600.css';
+@import '@fontsource/inter/400.css';
+@import '@fontsource/inter/500.css';
+
+@theme {
+  /* Paleta inspirada en el Valle de Orosi: verdes profundos y tonos tierra */
+  --color-forest-50: #f2f5f0;
+  --color-forest-100: #e0e8db;
+  --color-forest-400: #6b8f5c;
+  --color-forest-600: #4a6b3d;
+  --color-forest-800: #2d4224;
+  --color-forest-900: #1a2814;
+
+  --color-stone-50: #faf9f7;
+  --color-stone-100: #f0ede7;
+  --color-stone-400: #a89a85;
+  --color-stone-800: #4a4239;
+  --color-stone-900: #2b2620;
+
+  --font-serif: 'Cormorant Garamond', serif;
+  --font-sans: 'Inter', sans-serif;
+}
+
+body {
+  @apply font-sans text-stone-800 bg-stone-50;
+}
+
+h1, h2, h3 {
+  @apply font-serif;
+}
+
+.textura-papel {
+  background-color: var(--color-stone-100);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+}

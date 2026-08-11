@@ -1,0 +1,32 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const placeholder = '/images/lugar/iglesia.jpg';
+const wazeUrl = 'https://waze.com/ul?q=Truchas%20San%20Ignacio%20Orosi';
+const mapEmbedSrc = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12962.964958135484!2d-83.86166733126419!3d9.7749867287258!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa1214bfd30bd8d%3A0x636320421179159f!2sTruchas%20San%20Ignacio!5e1!3m2!1ses!2scr!4v1786090286030!5m2!1ses!2scr';
+---
+
+<Layout title="Cómo llegar" description="Cómo llegar a Truchas San Ignacio, Valle de Orosi" transparentHeader={false}>
+  <main class="flex-1 bg-stone-50 pt-32 pb-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-14">
+        <h1 class="font-serif text-5xl text-forest-800 mb-3">Cómo llegar</h1>
+        <p class="font-sans text-stone-800 max-w-lg mx-auto">Estamos ubicados en el Valle de Orosi, Cartago, a 3 km de la iglesia colonial.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <div class="aspect-[4/3] md:aspect-auto rounded-lg overflow-hidden shadow-lg">
+          <img src={placeholder} alt="Iglesia colonial del Valle de Orosi, punto de referencia" class="w-full h-full object-cover" />
+        </div>
+
+        <div class="aspect-[4/3] md:aspect-auto rounded-lg overflow-hidden shadow-lg">
+          <iframe src={mapEmbedSrc} class="w-full h-full border-0" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href={wazeUrl} target="_blank" rel="noopener noreferrer" class="inline-block bg-forest-600 hover:bg-forest-800 text-white font-sans text-sm uppercase tracking-wide px-8 py-3 rounded transition-colors">Abrir en Waze</a>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,71 @@
+---
+interface Props {
+  imagenes: { src: string; alt: string }[];
+}
+
+const { imagenes } = Astro.props;
+---
+
+<div id="bubble-track" class="flex gap-4 overflow-x-auto pb-4 px-1 snap-x snap-proximity scrollbar-hide cursor-grab active:cursor-grabbing">
+  {imagenes.map((imagen) => (
+    <div class="snap-start shrink-0 rounded-full overflow-hidden border-2 border-forest-400 shadow-md" style="width: 6rem; height: 6rem;">
+      <img src={imagen.src} alt={imagen.alt} class="block object-cover pointer-events-none" style="width: 6rem; height: 6rem;" onerror="this.onerror=null; this.src='/images/galeria/test.jpg';" />
+    </div>
+  ))}
+</div>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+</style>
+
+<script>
+  const track = document.getElementById('bubble-track');
+  if (track) {
+    let isDown = false;
+    let startX = 0;
+    let scrollLeftStart = 0;
+    let lastX = 0;
+    let velocity = 0;
+    let momentumId: number;
+
+    const stopMomentum = () => cancelAnimationFrame(momentumId);
+
+    const applyMomentum = () => {
+      if (Math.abs(velocity) < 0.5) return;
+      track.scrollLeft -= velocity;
+      velocity *= 0.94;
+      momentumId = requestAnimationFrame(applyMomentum);
+    };
+
+    track.addEventListener('mousedown', (e) => {
+      isDown = true;
+      stopMomentum();
+      startX = e.pageX - track.offsetLeft;
+      lastX = startX;
+      scrollLeftStart = track.scrollLeft;
+    });
+
+    ['mouseleave', 'mouseup'].forEach((evt) => {
+      track.addEventListener(evt, () => {
+        if (isDown) applyMomentum();
+        isDown = false;
+      });
+    });
+
+    track.addEventListener('mousemove', (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - track.offsetLeft;
+      const walk = (x - startX) * 1.5;
+      track.scrollLeft = scrollLeftStart - walk;
+      velocity = x - lastX;
+      lastX = x;
+    });
+  }
+</script>
